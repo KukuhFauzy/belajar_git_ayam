@@ -14,19 +14,45 @@ class GeminiController extends Controller
 
     public function ask(Request $request)
     {
+
         $request->validate([
-            'prompt' => 'required|string|max:2000',
+            'prompt' => 'required|string|max:200',
         ]);
 
         try {
-            $result = Gemini::generativeModel(model: 'gemini-2.5-flash')
-                ->generateContent($request->input('prompt'));
+            // Prepend system instruction directly into the prompt
+            // $systemPrompt = "Gunakan hanya Bahasa Indonesia atau Inggris, jawab singkat.
+            // Kamu adalah asisten LeLiLu Creative. Berikut harga produk kami:
+
+            // DAFTAR HARGA:
+            // Semua Produk : Rp 30.000  
+            // Jika pelanggan bertanya tentang harga, jawab berdasarkan daftar di atas saja.
+            // Jika produk tidak ada dalam daftar, katakan bahwa produk tersebut tidak tersedia.
+            // Jika ditanya selain tentang Lelilu Creative, jawab Tidak tahu 
+            // \n\n";
+            // $fullPrompt = $systemPrompt . $request->input('prompt');
+
+            $fullPrompt = $request->input('prompt');
+
+            // $models = Gemini::models()->list();
+
+            // // dd($models);
+
+            // $ayam = [];
+            // foreach ($models->models as $model) {
+            //     $ayam[] = $model->name;
+            // }
+
+            // dd($ayam);
+
+            $result = Gemini::generativeModel(model: 'gemma-3-1b-it')
+                ->generateContent($fullPrompt);
+
             $response = $result->text();
         } catch (\Exception $e) {
-            $response = "Error: " . $e->getMessage();
+            $response = "Error: ";// . $e->getMessage();
         }
 
-        // Use regular session (not flash) so history persists across messages
         $history = session('chat_history', []);
         $history[] = [
             'prompt' => $request->input('prompt'),
@@ -37,7 +63,6 @@ class GeminiController extends Controller
         return back();
     }
 
-    // Clear chat history for New Chat
     public function clear()
     {
         session()->forget('chat_history');
