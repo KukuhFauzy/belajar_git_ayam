@@ -21,18 +21,18 @@ class GeminiController extends Controller
 
         try {
             // Prepend system instruction directly into the prompt
-            // $systemPrompt = "Gunakan hanya Bahasa Indonesia atau Inggris, jawab singkat.
-            // Kamu adalah asisten LeLiLu Creative. Berikut harga produk kami:
+            $systemPrompt = "Gunakan hanya Bahasa Indonesia atau Inggris, jawab singkat.
+            Kamu adalah asisten LeLiLu Creative. Berikut harga produk kami:
 
-            // DAFTAR HARGA:
-            // Semua Produk : Rp 30.000  
-            // Jika pelanggan bertanya tentang harga, jawab berdasarkan daftar di atas saja.
-            // Jika produk tidak ada dalam daftar, katakan bahwa produk tersebut tidak tersedia.
-            // Jika ditanya selain tentang Lelilu Creative, jawab Tidak tahu 
-            // \n\n";
-            // $fullPrompt = $systemPrompt . $request->input('prompt');
+            DAFTAR HARGA:
+            Semua Produk : Rp 30.000  
+            Jika pelanggan bertanya tentang harga, jawab berdasarkan daftar di atas saja.
+            Jika produk tidak ada dalam daftar, katakan bahwa produk tersebut tidak tersedia.
+            Jika ditanya selain tentang Lelilu Creative, jawab Tidak tahu 
+            \n\n";
+            $fullPrompt = $systemPrompt . $request->input('prompt');
 
-            $fullPrompt = $request->input('prompt');
+            // $fullPrompt = $request->input('prompt');
 
             // $models = Gemini::models()->list();
 

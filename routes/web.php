@@ -28,9 +28,62 @@ Route::get("/motor", function(){
 Route::get("/pesawat", function(){
 
     $ikan = Product::all();
+
     // kodingan
-    if ($ikan ) {
-        # code...
-    }
+// $buah = Product::where("price", ">", 0)->get();
+foreach ($ikan as &$buah) {
+        $buah->jawa = 'hitam';
+    if ($buah->price > 10000 && $buah->price < 18000){
+        echo "Merah";
+        $buah->jawa = 'Merah';
+    } elseif ($buah->price > 18000 && $buah->price < 30000){
+        $buah->jawa = 'Kuning';
+        echo "Kuning";
+    } elseif ($buah->price > 30000){
+        $buah->jawa = 'Hijau';
+        echo "Hijau";
+}
+
+
+}
+// dd($hewan);
     return view("kardus", ["hiu" => $ikan]);
+
+    // dd($ikan);
+
+    // dd($ikan);
+    // $ikan->price = Product::from("");
+    // $ikan->jawa = Produ  ct::where("price");
+    // echo "$ikan->price";
+    // echo $jawa;
+});
+
+Route::get('/cina', function(){
+    // $putih = "putih";
+
+    // $hewan = [["Ayam Goreng", 15000], ["Bebek Bakar", 20000], ["Cicak Terbang", 100000],["Kuda Renang", 50000]];
+
+    // for ($i=0; $i <= count($hewan) - 1; $i++) { 
+    //     $hewan[$i][] = $putih;
+    // }
+
+$hewan = [["Ayam Goreng", 15000], ["Bebek Bakar", 20000], ["Cicak Terbang", 100000],["Kuda Renang", 50000]];
+    $putih = "putih";
+    for ($i=0; $i <= count($hewan) - 1; $i++) { 
+
+        if ($hewan[$i][1] > 10000 && $hewan[$i][1] < 18000) {
+            $hewan[$i][] = "Merah";
+            echo "merah";
+        } elseif ($hewan[$i][1] > 18000 && $hewan[$i][1] < 30000) {
+            echo "kuning";
+            $hewan[$i][] = "Kuning";
+        } elseif ($hewan[$i][1] > 30000) {
+            echo "hijau";
+            $hewan[$i][] = "Hijau";
+        } else {
+            echo "Error";
+        }  
+    }
+
+    dd($hewan);
 });
