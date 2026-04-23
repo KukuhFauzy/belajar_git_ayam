@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -86,4 +87,31 @@ $hewan = [["Ayam Goreng", 15000], ["Bebek Bakar", 20000], ["Cicak Terbang", 1000
     }
 
     dd($hewan);
+});
+
+Route::get("/pulau/{id}", function($waw){
+
+    $ikan = Product::all();
+    echo $waw;
+
+foreach ($ikan as &$buah) {
+        $buah->jawa = 'hitam';
+    if ($buah->price < $waw){
+        echo "Merah";
+        $buah->jawa = 'Merah';
+    } elseif ($buah->price == $waw){
+        $buah->jawa = 'Kuning';
+        echo "Kuning";
+    } elseif ($buah->price > $waw){
+        $buah->jawa = 'Hijau';
+        echo "Hijau";
+    }
+}
+    return view("kardus", ["hiu" => $ikan]);
+});
+
+Route::get('/index', function(){
+        $siput = Post::all();
+        dd($siput);
+    return view("index", ["keong" => $siput]);
 });
